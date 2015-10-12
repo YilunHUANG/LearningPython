@@ -141,6 +141,79 @@ Tuple: ordered sequence of elements
 
 
 
+'''lecture 4'''
+
+'''
+函数抽象与递归简介
+we have already learnt
+assignment, conditionals, I/O, looping constructs(for, while)
+turing complete, we can program anything but may be hard
+
+we still need decomposition and abstraction
+which means we need functions to
+    block up into modules
+    suppress details
+    create new primitives 创建新的原语
+关键词 def，return
+即便函数不需要返回任何东西，最好也写上 return None，
+这样实际上是在减少程序出错的可能
+'''
+
+##def sqrt(x):
+##    if x>=0:
+##        ans = 0
+##        while ans**2<x:
+##            ans +=1
+##        if ans**2 ==x:
+##            return ans
+##        else:
+##            print(x,"is not a perfect square")
+##            return None
+##    else:
+##        print(x,"is not a none-nagative number")
+##        return None
+##        
+##print(sqrt(-10))
+
+def solve(numLegs, numHeads):
+    ans = ()
+    for numPigs in range(0, numHeads+1):
+        for numChickens in range(0, numHeads+1):
+            numSpiders = numHeads - numPigs - numChickens
+            if 4*numPigs + 2*numChickens + 8*numSpiders == numLegs:
+                ans = ans + ((numPigs, numChickens, numSpiders),)
+    return ans
+
+def barnYard():
+    heads = int(input("Enter number of heads: "))
+    legs = int(input("Enter number of legs: "))
+    ans = solve(legs, heads)
+    if len(ans) == 0:
+        print("no such answer")
+    else:
+        print(ans)
+    
+
+barnYard()
+
+'''
+recursion
+递归的意义在于：把一个问题分解成一个更简单的同类问题
+首先找出base case，找出最简单的情况下的解决方法
+然后将一个普通例子逐渐还原成base case
+'''
+
+##def isPalindrome(s):
+##    if len(s)<=1:
+##        return True
+##    else:
+##        return s[0]==s[-1] and isPalindrome(s[1:-1])
+
+     
+         
+     
+
+
 
 
 
