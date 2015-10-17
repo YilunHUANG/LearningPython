@@ -175,26 +175,26 @@ which means we need functions to
 ##        
 ##print(sqrt(-10))
 
-def solve(numLegs, numHeads):
-    ans = ()
-    for numPigs in range(0, numHeads+1):
-        for numChickens in range(0, numHeads+1):
-            numSpiders = numHeads - numPigs - numChickens
-            if 4*numPigs + 2*numChickens + 8*numSpiders == numLegs:
-                ans = ans + ((numPigs, numChickens, numSpiders),)
-    return ans
-
-def barnYard():
-    heads = int(input("Enter number of heads: "))
-    legs = int(input("Enter number of legs: "))
-    ans = solve(legs, heads)
-    if len(ans) == 0:
-        print("no such answer")
-    else:
-        print(ans)
-    
-
-barnYard()
+##def solve(numLegs, numHeads):
+##    ans = ()
+##    for numPigs in range(0, numHeads+1):
+##        for numChickens in range(0, numHeads+1):
+##            numSpiders = numHeads - numPigs - numChickens
+##            if 4*numPigs + 2*numChickens + 8*numSpiders == numLegs:
+##                ans = ans + ((numPigs, numChickens, numSpiders),)
+##    return ans
+##
+##def barnYard():
+##    heads = int(input("Enter number of heads: "))
+##    legs = int(input("Enter number of legs: "))
+##    ans = solve(legs, heads)
+##    if len(ans) == 0:
+##        print("no such answer")
+##    else:
+##        print(ans)
+##    
+##
+##barnYard()
 
 '''
 recursion
@@ -209,7 +209,114 @@ recursion
 ##    else:
 ##        return s[0]==s[-1] and isPalindrome(s[1:-1])
 
-     
+
+
+'''lecture 5'''
+'''
+字母L，long integer，处理时会比普通的效率低很多
+一旦成为L，就一直在L上了
+不过似乎python3并不会在结果后面加L，而且除法得到的结果变成了浮点类型
+
+float类型
+scientific notation科学记数法
+mantissa尾数  exponent 指数
+0<=mantissa<2
+64bits 64位，1bit for sign符号
+    11bits for exponent 指数
+    52bits for mantissa 尾数
+
+    于是乎只能表示到17 decimal digits（十进制），17位的精度。高于17为python不能表示（其他很多语言也是）
+
+    为什么会出现误差，例如1/8=0.125=1.25*10^-1=1*2^-3；这是不会出现误差的
+    然而，例如1/10=0.1=1*10^-1=？却没有办法用二进制精确表示，于是产生误差
+    
+    用双等号来检查浮点数是不是相等是有风险的，而实际上最好不要去检查值是否相等，
+    而是去检查值是不是足够接近,例如abs(a**2-2.0)<epsilon
+    可以自己创建一个函数例如 near 来判断约等于。
+'''
+
+
+##a = 2**1000
+##b = 2**999
+##c = a/b
+##d = 0.1
+##print(a)
+##print(c) #2.0
+##print(d)
+
+##x = 0.0
+##for i in range(10):
+##    x = x+0.1
+##print(x) #可以看出误差
+
+##import math
+##x = math.sqrt(2)
+##print(x)
+##print(x**2==2)
+##print(x**2) #false
+
+'''
+求平方根
+successive approximation逐次近似
+    guess = initial_guess
+    for iter in range(100);
+         if f(guess) close enough: return guss
+         else: guess = better guess
+Bisection method二分法
+    有一系列线性可能结果，每次猜想（检测）中间的值
+
+iteration method一个迭代的方法
+'''
+
+
+
+import math
+'''自己写的'''
+##def squareRootBi(x, epsilon):
+##    low = 0
+##    high = x
+##    
+##    for i in range(100):
+##        mid = (low+high)/2.0
+##        if  abs(mid**2-x) < epsilon:
+##            return mid
+##        else:
+##            if mid**2>x:
+##                high = mid
+##            else:
+##                low = mid
+##
+##    return None
+
+'''老师写的'''
+def squareRootBi(x, epsilon):
+    '''
+        Assume x>=0 and epsilon >0
+        Return y s.t. y*y is within epsilon of x
+    '''
+    assert x >=0, "x must be non-negative, not "+str(x)
+    assert epsilon >0, "epsilon must be positive, not "+str(epsilon)
+
+    low = 0
+    high = x
+    guess = (low + high)/2.0
+    ctr = 1
+    while abs(guess**2 - x)>epsilon and ctr <= 100:
+        if guess**2 <x:
+            low = guess
+        else:
+            high = guess
+        guess = (low + high)/2.0
+        ctr +=1
+    assert ctr<=100, "Iteration count exceed"
+    print("Bi method. Num. iterations:",ctr,"Estimate",guess)
+    return guess
+
+squareRootBi(9,0.0001)
+
+
+
+
          
      
 
