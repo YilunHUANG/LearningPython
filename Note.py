@@ -270,8 +270,9 @@ iteration method一个迭代的方法
 
 
 
-import math
+
 '''自己写的'''
+##import math
 ##def squareRootBi(x, epsilon):
 ##    low = 0
 ##    high = x
@@ -289,6 +290,7 @@ import math
 ##    return None
 
 '''老师写的'''
+import math
 def squareRootBi(x, epsilon):
     '''
         Assume x>=0 and epsilon >0
@@ -298,7 +300,8 @@ def squareRootBi(x, epsilon):
     assert epsilon >0, "epsilon must be positive, not "+str(epsilon)
 
     low = 0
-    high = x
+    #high = x 这样写是有bug的，无法计算小于1的分数
+    high = max(x,1)
     guess = (low + high)/2.0
     ctr = 1
     while abs(guess**2 - x)>epsilon and ctr <= 100:
@@ -312,11 +315,40 @@ def squareRootBi(x, epsilon):
     print("Bi method. Num. iterations:",ctr,"Estimate",guess)
     return guess
 
-squareRootBi(9,0.0001)
+squareRootBi(9, 0.0001)
+squareRootBi(1, 0.0001)
+squareRootBi(0.25,0.0001)
 
 
 
 
+'''lecture 6'''
+'''
+regression testing
+speed of convergence 什么时候循环结束
+
+derivative
+newton's method
+newton raphson 
+'''
+
+def squareRootNR(x, epsilon):
+    assert x>=0, "x must be a non-nagtive number ,not "+str(x)
+    assert epsilon > 0, "epsilon must be positive, not "+ str(epsilon)
+    x = float(x)
+    guess = x/2.0
+    diff = guess**2 -x
+    ctr = 1
+    while abs(diff) > epsilon and ctr <= 100:
+        guess = guess - diff/(2.0*guess)
+        diff = guess**2 -x
+        ctr +=1
+    assert ctr<=100, "Iteration count exceeded"
+    print("NR method. Num. iteration:", ctr, "Estimate", guess)
+    return guess
+
+squareRootNR(1234567,0.0001)
+squareRootBi(1234567,0.0001)
          
      
 
