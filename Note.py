@@ -290,34 +290,35 @@ iteration method一个迭代的方法
 ##    return None
 
 '''老师写的'''
-import math
-def squareRootBi(x, epsilon):
-    '''
-        Assume x>=0 and epsilon >0
-        Return y s.t. y*y is within epsilon of x
-    '''
-    assert x >=0, "x must be non-negative, not "+str(x)
-    assert epsilon >0, "epsilon must be positive, not "+str(epsilon)
 
-    low = 0
-    #high = x 这样写是有bug的，无法计算小于1的分数
-    high = max(x,1)
-    guess = (low + high)/2.0
-    ctr = 1
-    while abs(guess**2 - x)>epsilon and ctr <= 100:
-        if guess**2 <x:
-            low = guess
-        else:
-            high = guess
-        guess = (low + high)/2.0
-        ctr +=1
-    assert ctr<=100, "Iteration count exceed"
-    print("Bi method. Num. iterations:",ctr,"Estimate",guess)
-    return guess
-
-squareRootBi(9, 0.0001)
-squareRootBi(1, 0.0001)
-squareRootBi(0.25,0.0001)
+##import math
+##def squareRootBi(x, epsilon):
+##    '''
+##        Assume x>=0 and epsilon >0
+##        Return y s.t. y*y is within epsilon of x
+##    '''
+##    assert x >=0, "x must be non-negative, not "+str(x)
+##    assert epsilon >0, "epsilon must be positive, not "+str(epsilon)
+##
+##    low = 0
+##    #high = x 这样写是有bug的，无法计算小于1的分数
+##    high = max(x,1)
+##    guess = (low + high)/2.0
+##    ctr = 1
+##    while abs(guess**2 - x)>epsilon and ctr <= 100:
+##        if guess**2 <x:
+##            low = guess
+##        else:
+##            high = guess
+##        guess = (low + high)/2.0
+##        ctr +=1
+##    assert ctr<=100, "Iteration count exceed"
+##    print("Bi method. Num. iterations:",ctr,"Estimate",guess)
+##    return guess
+##
+##squareRootBi(9, 0.0001)
+##squareRootBi(1, 0.0001)
+##squareRootBi(0.25,0.0001)
 
 
 
@@ -329,28 +330,49 @@ speed of convergence 什么时候循环结束
 
 derivative
 newton's method
-newton raphson 
+newton raphson
+数组 list
 '''
-
-def squareRootNR(x, epsilon):
-    assert x>=0, "x must be a non-nagtive number ,not "+str(x)
-    assert epsilon > 0, "epsilon must be positive, not "+ str(epsilon)
-    x = float(x)
-    guess = x/2.0
-    diff = guess**2 -x
-    ctr = 1
-    while abs(diff) > epsilon and ctr <= 100:
-        guess = guess - diff/(2.0*guess)
-        diff = guess**2 -x
-        ctr +=1
-    assert ctr<=100, "Iteration count exceeded"
-    print("NR method. Num. iteration:", ctr, "Estimate", guess)
-    return guess
-
-squareRootNR(1234567,0.0001)
-squareRootBi(1234567,0.0001)
+##import math
+##def squareRootNR(x, epsilon):
+##    assert x>=0, "x must be a non-nagtive number ,not "+str(x)
+##    assert epsilon > 0, "epsilon must be positive, not "+ str(epsilon)
+##    x = float(x)
+##    guess = x/2.0
+##    diff = guess**2 -x
+##    ctr = 1
+##    while abs(diff) > epsilon and ctr <= 100:
+##        guess = guess - diff/(2.0*guess)
+##        diff = guess**2 -x
+##        ctr +=1
+##    assert ctr<=100, "Iteration count exceeded"
+##    print("NR method. Num. iteration:", ctr, "Estimate", guess)
+##    return guess
+##
+##squareRootNR(1234567,0.0001)
+##squareRootBi(1234567,0.0001)
          
      
+'''lecture 7'''
+'''
+dictionaries字典
+{}大括号
+mutable 可改变
+元素无序 key value pair
+Hashing， constant time when searching，fast
+
+pseudo code，写伪代码是规划程序的很好方式，不用考虑实现的细节，让思路清晰，连贯
+efficiency: choice of algorithm
+map problems into class of algorithms
+
+focus on worse case
+'''
+
+def showDicts():
+    EtoF = {"one":"un", "soccer":"football"}
+    print (EtoF["soccer"])
+    print (EtoF[0])
+    print(EtoF)
 
 
 
