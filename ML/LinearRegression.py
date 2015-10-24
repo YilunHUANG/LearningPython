@@ -14,7 +14,7 @@ def traning(THETA,X,Y,alpha):
     alpha:learning rate'''
     
     PD = derivative(THETA, X, Y)
-    while abs(max(PD))>0.01:
+    while abs(max(PD))>0.1:
         for i in range(len(THETA)):
             THETA[i] = THETA[i]-alpha*PD[i]
         PD = derivative(THETA, X, Y)
@@ -25,12 +25,9 @@ def derivative(THETA,X,Y):
     for j in range(len(THETA)): #对每一个θ求偏导
         sum = 0
         for m in range(len(X)):  #m条训练记录
-            unit = hypothesis(X[m], THETA)
-            unit -= Y[m]
-            unit *= X[m][j]
-            sum += unit
+            sum += (hypothesis(X[m], THETA) - Y[m])*X[m][j]
         PD.append(sum/len(X))
-    print(PD)
+    #print(PD)
     return PD
 
 def hypothesis(x,THETA):
