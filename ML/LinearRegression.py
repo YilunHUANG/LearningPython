@@ -1,9 +1,12 @@
 '''
 Linear Regression
-Created on 2015年10月24日
+Created on 2015/10/24/
 @author: Alan HUANG
 '''
+
 from matplotlib.pyplot import *
+import numpy as np
+from numpy import dtype
 
 
 def traning(THETA,X,Y,alpha):
@@ -53,18 +56,42 @@ def draw2D(THETA,trainX,trainY):
     
     show()
  
-'''    
-X = [(1,2104,5,1,45),(1,1416,3,2,40),(1,1534,3,2,30),(1,852,2,1,36)]
-Y = [460,232,315,178]
-THETA = [0,0,0,0,0]
-alpha = 0.00001
-'''
-X = [(1,65),(1,88),(1,95),(1,100),(1,130),(1,135)]
-Y = [320985,440652,482770,518200,680600,665978]
-#Y = [330378,447218,482778,508178,660578,685978]
-THETA = [0,0]
-alpha = 0.0001
-
-traning(THETA, X, Y, alpha)
-print(THETA)
-draw2D([178,5080], X, Y)
+def normlize():
+    x = np.array([[1,65],[1,88],[1,95],[1,100],[1,130],[1,135]],dtype="f")
+    print(x)
+    x_mean = np.mean(x,axis=0)
+    print(x_mean)
+    x_std = np.std(x,axis=0)
+    print(x_std)
+    for row in x:
+        for i in range(1,len(row)):
+            row[i] = float((row[i]-x_mean[i])/x_std[i])
+    print(x)
+    return x
+     
+ 
+#def normalEquation(X,Y):
+     
+def test1():  
+    X = [(1,65),(1,88),(1,95),(1,100),(1,130),(1,135)]
+    Y = [320985,440652,482770,518200,680600,665978]
+    THETA = [0,0]
+    alpha = 0.0001
+    
+    traning(THETA, X, Y, alpha)
+    print(THETA)
+    draw2D([178,5080], X, Y)
+    
+def test2():
+    X = [(1,2104,5,1,45),(1,1416,3,2,40),(1,1534,3,2,30),(1,852,2,1,36)]
+    Y = [460,232,315,178]
+    THETA = [0,0,0,0,0]
+    alpha = 0.00001
+    
+def tempTest():
+    normlize()
+    
+    
+if __name__=="__main__":
+    test1()
+    #tempTest()
