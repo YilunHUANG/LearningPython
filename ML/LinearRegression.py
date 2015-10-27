@@ -15,7 +15,7 @@ def traning(X,Y,THETA,alpha):
     #alpha:learning rate
     times = 0
     PD = derivative(THETA, X, Y)
-    while abs(max(PD))>0.01:
+    while abs(max(PD))>0.1:
         for i in range(len(THETA)):
             THETA[i] = THETA[i]-alpha*PD[i]
         PD = derivative(THETA, X, Y)
@@ -28,9 +28,15 @@ def derivative(THETA,X,Y):
     for j in range(len(THETA)): #对每一个θ求偏导
         add = 0
         for m in range(len(X)):  #m条训练记录
+<<<<<<< HEAD
             add += (hypothesis(X[m], THETA)-Y[m])*X[m][j]
         PD.append(add/len(X))
     print("partial derivative is:",PD)
+=======
+            sum += (hypothesis(X[m], THETA) - Y[m])*X[m][j]
+        PD.append(sum/len(X))
+    #print(PD)
+>>>>>>> origin/master
     return PD
 
 def hypothesis(X,THETA):
@@ -134,4 +140,9 @@ def tempTest():
     
     
 if __name__=="__main__":
+<<<<<<< HEAD
     test2()
+=======
+    test1()
+    #tempTest()
+>>>>>>> origin/master
