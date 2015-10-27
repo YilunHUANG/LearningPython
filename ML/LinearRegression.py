@@ -15,7 +15,7 @@ def traning(X,Y,THETA,alpha):
     #alpha:learning rate
     times = 0
     PD = derivative(THETA, X, Y)
-    while abs(max(PD))>0.1:
+    while abs(max(PD))>0.01:
         for i in range(len(THETA)):
             THETA[i] = THETA[i]-alpha*PD[i]
         PD = derivative(THETA, X, Y)
@@ -28,15 +28,10 @@ def derivative(THETA,X,Y):
     for j in range(len(THETA)): #对每一个θ求偏导
         add = 0
         for m in range(len(X)):  #m条训练记录
-<<<<<<< HEAD
             add += (hypothesis(X[m], THETA)-Y[m])*X[m][j]
         PD.append(add/len(X))
     print("partial derivative is:",PD)
-=======
-            sum += (hypothesis(X[m], THETA) - Y[m])*X[m][j]
-        PD.append(sum/len(X))
-    #print(PD)
->>>>>>> origin/master
+
     return PD
 
 def hypothesis(X,THETA):
@@ -47,7 +42,7 @@ def hypothesis(X,THETA):
     h = 0
     for i in range(len(X)):
         h += X[i]*THETA[i]
-    return h    
+    return h
     
 def draw2D(THETA,X,Y):#测试通过
     #在XY坐标平面上画出预测的直线，还有样本的散点
@@ -83,7 +78,7 @@ def scaling(X):
     return tempX
      
 def recoverTheta(THETA, X, scaledX):
-    #not finished
+    #只剩下这个没完成
     '''
     for 
     
@@ -102,12 +97,12 @@ def recoverTheta(THETA, X, scaledX):
      
 def test1():  
     X = np.array([(1,65),(1,88),(1,95),(1,100),(1,130),(1,135)])
-    Y = [320985,440652,482770,518200,680600,665978]
+    Y = np.array([320985,440652,482770,518200,680600,665978])
     THETA = [0,0]
-    alpha = 0.001
-    
+    alpha = 0.0001
+    #如果不进行特征缩放的话，梯度下降法要花很久才能收敛
     traning(X, Y, THETA, alpha)
-    print(THETA)
+    print("theta is:",THETA)
     draw2D(THETA, X, Y)
     
 def test2():
@@ -115,13 +110,12 @@ def test2():
     X = np.array([[1,2104,5,1,45],[1,1416,3,2,40],[1,1534,3,2,30],[1,852,2,1,36]],dtype="f")
     Y = np.array([460,232,315,178],dtype="f")
     THETA = [0,0,0,0,0]
-    alpha = 0.1
-    
+    alpha = 0.3
+    #alpha 没法选到1
     scaledX = scaling(X)
-    print(scaledX)
     traning(scaledX, Y, THETA, alpha)
     
-    print(THETA)
+    print("theta is:",THETA)
     
 def tempTest():
     #准备数据
@@ -134,15 +128,13 @@ def tempTest():
     traning(scaledX, Y, THETA, alpha)
     print("theta before recovering is",THETA)
     
-    recoverTheta(THETA, X, scaledX)
+    #recoverTheta(THETA, X, scaledX)
     #print("the final theta is",THETA)
     draw2D(THETA, X, Y)
     
     
 if __name__=="__main__":
-<<<<<<< HEAD
-    test2()
-=======
-    test1()
-    #tempTest()
->>>>>>> origin/master
+    #测试在不进行特征缩放的情况下，训练theta，特征数为1
+    #test1() 
+    #test2()
+    tempTest()
