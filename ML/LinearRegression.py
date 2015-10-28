@@ -4,10 +4,9 @@ Created on 2015/10/24/
 @author: Alan HUANG
 '''
 
-from matplotlib.pyplot import *
+from matplotlib.pyplot import plot, scatter, show
 import numpy as np
-from numpy import dtype
-from scipy.constants.constants import alpha
+
 
 
 def traning(X,Y,THETA,alpha):
@@ -35,21 +34,21 @@ def derivative(THETA,X,Y):
     return PD
 
 def hypothesis(X,THETA):
-    #对于单独的一组输入样本，给出预测
-    #X: [1,2,3,4,5]
-    #THETA: [1,2,3,4,5]
+    #线性模型
+    #h = x0+x1+……xn
     
     h = 0
     for i in range(len(X)):
         h += X[i]*THETA[i]
     return h
     
-def draw2D(THETA,X,Y):#测试通过
-    #在XY坐标平面上画出预测的直线，还有样本的散点
+def drawTrainingSet(THETA,X,Y):
+    #根据给定的参数值，点集
+    #画出对应的直线，还有样本的散点图
 
     #准备连续的点
-    begin  = np.min(X)
-    end = np.max(X)
+    begin  = np.min(X.take(1,1))
+    end = np.max(X.take(1,1))
     lineX = np.linspace(begin,end,256,endpoint=True)
     lineY = []
     for item in lineX:
@@ -63,47 +62,60 @@ def draw2D(THETA,X,Y):#测试通过
     #画图    
     scatter(scatterX,scatterY) #画散点图
     plot(lineX,lineY) #画直线
-    show()
- 
+    
+    
+
 def scaling(X):
-    tempX = X
-    x_mean = np.mean(tempX,axis=0)
-    x_std = np.std(tempX,axis=0)
-    for row in tempX:
+    scaledX = X.copy()
+    x_mean = np.mean(scaledX,axis=0)
+    x_std = np.std(scaledX,axis=0)
+    for row in scaledX:
         for i in range(len(row)):
             if x_std[i] == 0:
                 row[i] = 1
             else:
                 row[i] = float((row[i]-x_mean[i])/x_std[i])
-    return tempX
+    return (scaledX,x_mean,x_std)
      
-def recoverTheta(THETA, X, scaledX):
-    #只剩下这个没完成
-    '''
-    for 
+def drawHypothesis(X,THETA,x_mean,x_std):
+    #取出第二列的数据take(index，axis)
+    x = X.take(1,1)
     
+    begin = np.min(x)
+    end = np.max(x)
     
+    lineX = []
+    line_x1 = np.linspace(begin,end,256,endpoint=True)
+    #构成了
+    for i in range(len(line_x1)):
+        lineX.append([1,line_x1[i]])
     
+    for line in lineX:
+        for i in range(len(line)):
+            if x_std[i] == 0:
+                line[i] = 1
+            else:
+                line[i] = (line[i]-x_mean[i])/x_std[i]
     
-    for i in range(len(THETA)):
-        if x_std[i] == 0:
-            THETA[i] = THETA[i]
-        else:
-            THETA[i] = THETA[i]*x_std[i]+x_mean[i]
-    return THETA
-    ''' 
- 
+    lineY = []
+    for item in lineX:
+        lineY.append(hypothesis(item, THETA))
+        
+    lineX = np.array(lineX)
+    plot(line_x1,lineY)
+    
+
 #def normalEquation(X,Y):
      
 def test1():  
-    X = np.array([(1,65),(1,88),(1,95),(1,100),(1,130),(1,135)])
+    X = np.array([[1,65],[1,88],[1,95],[1,100],[1,130],[1,135]])
     Y = np.array([320985,440652,482770,518200,680600,665978])
     THETA = [0,0]
     alpha = 0.0001
     #如果不进行特征缩放的话，梯度下降法要花很久才能收敛
     traning(X, Y, THETA, alpha)
     print("theta is:",THETA)
-    draw2D(THETA, X, Y)
+    drawTrainingSet(THETA, X, Y)
     
 def test2():
     #5个特征的情况（包含x0=1）
@@ -114,7 +126,6 @@ def test2():
     #alpha 没法选到1
     scaledX = scaling(X)
     traning(scaledX, Y, THETA, alpha)
-    
     print("theta is:",THETA)
     
 def tempTest():
@@ -123,14 +134,21 @@ def tempTest():
     Y = np.array([320985,440652,482770,518200,680600,665978],dtype="f")
     THETA = [0,0]
     alpha = 1
-    #缩放数据，训练数据
-    scaledX = scaling(X)
+    #缩放数据
+    scaleResult = scaling(X)
+    scaledX = scaleResult[0]
+    x_mean = scaleResult[1]
+    x_std = scaleResult[2]
+    #针对缩放后的数据进行训练
     traning(scaledX, Y, THETA, alpha)
-    print("theta before recovering is",THETA)
+    print("the trained theta is",THETA)
     
-    #recoverTheta(THETA, X, scaledX)
-    #print("the final theta is",THETA)
-    draw2D(THETA, X, Y)
+    #画出原本生成训练集的函数，和训练集中的样本点
+    drawTrainingSet([178,5080], X, Y)
+    #画出预测直线
+    drawHypothesis(X, THETA, x_mean, x_std)
+    
+    show()
     
     
 if __name__=="__main__":
