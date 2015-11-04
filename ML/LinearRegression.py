@@ -14,7 +14,7 @@ def traning(X,Y,THETA,alpha):
     #alpha:learning rate
     times = 0
     PD = derivative(THETA, X, Y)
-    while abs(max(PD))>0.01:
+    while max(np.absolute(PD))>0.01:
         for i in range(len(THETA)):
             THETA[i] = THETA[i]-alpha*PD[i]
         PD = derivative(THETA, X, Y)
@@ -124,7 +124,7 @@ def test2():
     THETA = [0,0,0,0,0]
     alpha = 0.3
     #alpha 没法选到1
-    scaledX = scaling(X)
+    scaledX = scaling(X)[0]
     traning(scaledX, Y, THETA, alpha)
     print("theta is:",THETA)
     
