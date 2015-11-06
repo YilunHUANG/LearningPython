@@ -4,7 +4,7 @@ Created on 2015年10月30日
 @author: Alan HUANG
 '''
 import numpy as np
-import matplotlib.pyplot as pl
+import numpy.linalg as linalg
 
 
 def hypothesis(x,THETA):
@@ -25,4 +25,9 @@ def scaling(X):
                 row[i] = float((row[i]-x_mean[i])/x_std[i])
     return (scaledX,x_mean,x_std)
 
+
+def normalEquation(X,Y):
+    transX = np.transpose(X)
+    #return (X^TX)^-1X^TY
+    return np.dot(np.dot(linalg.inv(np.dot(transX,X)),transX),Y)
 

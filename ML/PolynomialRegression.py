@@ -151,9 +151,31 @@ def test_withScaling():
     pl.plot(linX,computeY_scaling(linX,THETA,x_mean,x_std))
     pl.legend(["sin","hypothesis"])
 
+
+def testNormalEquation():
+    power = 3
+    XY = generateXY()
+    pl.scatter(XY[0],XY[1])
+    
+    X = formDataSet(XY[0], power)
+    Y = XY[1]
+    
+    THETA = tools.normalEquation(X, Y)
+    print("theta is:",THETA)
+    #画sin的图
+    linX = np.linspace(0,2*math.pi,num=100)
+    linY = np.sin(linX)
+    pl.plot(linX,linY)
+    
+    #画生成的曲线的图
+    pl.plot(linX,computeY(linX,THETA))
+    pl.legend(["sin","hypothesis"])
+    
+    
 if __name__ == "__main__":
     #test_noScaling()
-    test_withScaling()
+    #test_withScaling()
+    testNormalEquation()
     pl.show()
 
     
