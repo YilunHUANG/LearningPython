@@ -32,7 +32,7 @@ a = np.empty((3,4))
 创建数列形式的数组：
 ```python
 a = np.arange(100)
-a = np.arange(10,20,5) 
+a = np.arange(10,20,5)
 >>>array([10,15])
 ```
 ```python
@@ -60,6 +60,3 @@ np.vstack((a,b))
 ```python
 b = np.copy(a)
 ```
-
-
-

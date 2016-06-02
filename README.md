@@ -1,10 +1,5 @@
 # LearningPython
 
-In this depository，it contains:  
-- python learning note of MIT's open course, *Introduction to Computer Science and Programing*   
-- Natural language processing implementation  
-- Machine learning implementation  
-
 
 
 
